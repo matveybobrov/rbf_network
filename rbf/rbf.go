@@ -47,6 +47,7 @@ func NewRBFNetwork(templatesInputs mat.Matrix) *RBFNetwork {
 // веса сети так, чтобы результат совпадал с желаемым.
 // Возвращает вектор результатов для каждого входного шаблона
 func (net *RBFNetwork) Train(templates mat.Matrix, desired mat.Matrix) mat.Matrix {
+	fmt.Println("\n--Starting network training---")
 	numCenters, _ := net.Centers.Dims()
 
 	// Считаем матрицу активации F
@@ -68,6 +69,7 @@ func (net *RBFNetwork) Train(templates mat.Matrix, desired mat.Matrix) mat.Matri
 	// Обновляем веса: W=F^(-1)*Y
 	inversedActivations := matrix.Inverse(activations)
 	net.Weights = matrix.Dot(inversedActivations, desired)
+	fmt.Println("Weights were updated")
 
 	return result
 }
@@ -78,6 +80,7 @@ func (net *RBFNetwork) Train(templates mat.Matrix, desired mat.Matrix) mat.Matri
 // одному и тому же числу, а предсказанные значения используются для
 // прогнозирования следующих
 func (net *RBFNetwork) PredictRecursively(input []float64, valuesToPredict int) []float64 {
+	fmt.Println("\n--Starting recursive prediction---")
 	fmt.Printf("Testing input length: %v\n", len(input))
 	fmt.Printf("Values to predict: %v\n", valuesToPredict)
 
@@ -112,7 +115,7 @@ func (net *RBFNetwork) Log() {
 	centersCount, centersDimension := net.Centers.Dims()
 	weightsCount, _ := net.Weights.Dims()
 
-	fmt.Printf("\n--Settings--\n")
+	fmt.Printf("\n--Network Settings--\n")
 	fmt.Printf("Number of hidden neurons: %v\n", centersCount)
 	fmt.Printf("Centers dimension (equals number of inputs): %v\n", centersDimension)
 	fmt.Printf("Number of weights: %v\n", weightsCount)

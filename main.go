@@ -30,9 +30,10 @@ func main() {
 	predictedValues := net.PredictRecursively(firstInput, VALUES_TO_PREDICT)
 
 	// Выводим точность работы сети
+	fmt.Println("\n---Result---")
 	testingData := helper.ReadCSVData("data/DailyDelhiClimateTestNormalized.csv")
 	desiredData := testingData[:VALUES_TO_PREDICT]
-	fmt.Printf("\nDesired values: \n%v", desiredData)
+	fmt.Printf("Desired values: \n%v", desiredData)
 	fmt.Printf("\nPredicted values: \n%.6f", predictedValues)
 	accuracy := helper.CalculateAverageAccuracy(predictedValues, desiredData)
 	fmt.Println("\nAverage accuracy: ")
