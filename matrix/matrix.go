@@ -1,3 +1,4 @@
+// Данный пакет содержит методы работы с матрицами
 package matrix
 
 import (
@@ -6,6 +7,28 @@ import (
 
 	"gonum.org/v1/gonum/mat"
 )
+
+// Создаёт матрицу с указанным числом строк и колонок, заполняя её данными.
+// Длина вектора данных должна быть равна rows * cols
+func CreateMatrix(rows int, cols int, data []float64) *mat.Dense {
+	matrix := mat.NewDense(rows, cols, data)
+	return matrix
+}
+
+// Возвращает указанную строку матрицы
+func Row(m mat.Matrix, id int) []float64 {
+	_, rowLength := m.Dims()
+	result := make([]float64, rowLength)
+	mat.Row(result, id, m)
+	return result
+}
+
+func Inverse(m mat.Matrix) mat.Matrix {
+	rows, cols := m.Dims()
+	result := mat.NewDense(rows, cols, nil)
+	result.Inverse(m)
+	return result
+}
 
 func ReplaceRow(m mat.Matrix, rowIndex int, newRow []float64) {
 	// Convert mat.Matrix to mat.Dense to modify it
@@ -48,7 +71,7 @@ func GetRandomizedVector(row int) []float64 {
 	return result
 }
 
-func PrintMatrix(matrix mat.Matrix) {
+func Print(matrix mat.Matrix) {
 	rows, cols := matrix.Dims()
 	for row := range rows {
 		fmt.Printf("%v.\t", row)
@@ -84,7 +107,7 @@ func Scale(s float64, m mat.Matrix) mat.Matrix {
 	return o
 }
 
-// Multiply 2 matrices
+// Перемножение двух матриц
 func Multiply(m, n mat.Matrix) mat.Matrix {
 	r, c := m.Dims()
 	o := mat.NewDense(r, c, nil)
@@ -92,7 +115,7 @@ func Multiply(m, n mat.Matrix) mat.Matrix {
 	return o
 }
 
-// Add and subtract matrices
+// Складывание и вычитание матриц
 func Add(m, n mat.Matrix) mat.Matrix {
 	r, c := m.Dims()
 	o := mat.NewDense(r, c, nil)
