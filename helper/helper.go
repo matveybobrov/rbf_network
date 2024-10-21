@@ -112,6 +112,12 @@ func ReadCSVData(filePath string) []float64 {
 
 	return data
 }
+func NormalizeCSVFile(normalizedFileDest string, initFile string) error {
+	data := ReadCSVData(initFile)
+	data = NormalizeData(data)
+	err := SaveResult(normalizedFileDest, initFile, data)
+	return err
+}
 
 // Принимает массив полученных результатов по нескольким шаблонам и
 // массив желаемых результатов. Возвращает средний процент точности

@@ -26,22 +26,23 @@ func main() {
 	net.Train(inputs, desired)
 
 	// Рекурсивно предсказываем <VALUES_TO_PREDICT> значений
-	firstInput := trainingData[len(trainingData)-INPUT_SIZE:]
+	firstInput := make([]float64, INPUT_SIZE)
+	copy(firstInput, trainingData[len(trainingData)-INPUT_SIZE:])
 	predictedValues := net.PredictRecursively(firstInput, VALUES_TO_PREDICT)
+
+	// Денормализуем полученные значения
+	trainingData = helper.ReadCSVData("data/DailyDelhiClimateTrain.csv")
+	predictedValues = helper.UnnormalizeData(predictedValues, trainingData)
 
 	// Выводим точность работы сети
 	fmt.Println("\n---Result---")
-	testingData := helper.ReadCSVData("data/DailyDelhiClimateTestNormalized.csv")
+	testingData := helper.ReadCSVData("data/DailyDelhiClimateTest.csv")
 	desiredData := testingData[:VALUES_TO_PREDICT]
 	fmt.Printf("Desired values: \n%v", desiredData)
 	fmt.Printf("\nPredicted values: \n%.6f", predictedValues)
 	accuracy := helper.CalculateAverageAccuracy(predictedValues, desiredData)
 	fmt.Println("\nAverage accuracy: ")
 	fmt.Printf("%.5f%%\n", accuracy)
-
-	// Денормализуем полученные значения
-	allData := helper.ReadCSVData("data/DailyDelhiClimateTotal.csv")
-	predictedValues = helper.UnnormalizeData(predictedValues, allData)
 
 	// Сохраняем результат
 	helper.SaveResult("result/result.csv", "data/DailyDelhiClimateTest.csv", predictedValues)
