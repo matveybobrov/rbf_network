@@ -17,7 +17,8 @@ func main() {
 	const INPUT_SIZE = WINDOW_SIZE - OUTPUT_SIZE
 
 	// Готовим тренировочные шаблоны (матрица входных значений и вектор желаемых)
-	trainingData := helper.ReadCSVData("data/DailyDelhiClimateTrainNormalized.csv")
+	trainingData := helper.ReadCSVData("data/DailyDelhiClimateTrain.csv")
+	trainingData = helper.NormalizeData(trainingData)
 	inputs, desired := helper.PrepareData(trainingData, WINDOW_SIZE, STEP_SIZE, OUTPUT_SIZE)
 
 	// Создаём сеть и тренируем её, обновляя веса

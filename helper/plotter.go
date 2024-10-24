@@ -85,9 +85,9 @@ func PlotCSVFiles(file1, file2, outputFile string) error {
 
 	// Create a new plot
 	p := plot.New()
-	p.Title.Text = "Comparison"
-	p.X.Label.Text = "Date"
-	p.Y.Label.Text = "Mean temperature"
+	p.Title.Text = "Сравнение реальных и предсказанных данных"
+	p.X.Label.Text = "Дата"
+	p.Y.Label.Text = "Средняя температура"
 	p.X.Tick.Marker = plot.TimeTicks{Format: "2006-01-02"}
 
 	// Create a time series plotter for the first CSV file
@@ -102,7 +102,7 @@ func PlotCSVFiles(file1, file2, outputFile string) error {
 	}
 	line1.Color = plotutil.Color(0)
 	p.Add(line1)
-	p.Legend.Add("Real data", line1)
+	p.Legend.Add("Реальные данные", line1)
 
 	// Create a time series plotter for the second CSV file
 	timeSeries2 := make(plotter.XYs, len(xys2))
@@ -116,7 +116,7 @@ func PlotCSVFiles(file1, file2, outputFile string) error {
 	}
 	line2.Color = plotutil.Color(1)
 	p.Add(line2)
-	p.Legend.Add("Predicted data", line2)
+	p.Legend.Add("Предсказанные данные", line2)
 
 	// Save the plot to a file
 	if err := p.Save(8*vg.Inch, 8*vg.Inch, outputFile); err != nil {

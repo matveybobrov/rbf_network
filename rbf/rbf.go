@@ -12,8 +12,7 @@ import (
 type RBFNetwork struct {
 	// Центры активационных функций
 	Centers mat.Matrix
-	// Веса выходного слоя (строки соответствуют центрам, а колонки - выходным
-	// нейронам)
+	// Веса выходного слоя
 	Weights mat.Matrix
 	// Ширина активационных окон (для каждого центра)
 	Widths []float64
@@ -23,7 +22,7 @@ type RBFNetwork struct {
 // центрами, равными входным значениям шаблонов (c[i]=X[i])
 // (количество центров также равно количеству шаблонов);
 // случайными весами в интервале [0.0; 1.0);
-// с шириной окон, равной 1
+// с шириной окон, равной 0.9
 func NewRBFNetwork(templatesInputs mat.Matrix) *RBFNetwork {
 	templatesCount, _ := templatesInputs.Dims()
 
@@ -34,7 +33,7 @@ func NewRBFNetwork(templatesInputs mat.Matrix) *RBFNetwork {
 	// Начальные веса генерируются случайно в интервале [0.0;1.0)
 	weights := matrix.GetRandomizedMatrix(centersAmount, 1)
 
-	// Ширина каждого окна равна 1
+	// Устанавливаем ширину для каждого окна
 	widths := make([]float64, centersAmount)
 	for i := range centersAmount {
 		widths[i] = 0.9
@@ -74,8 +73,8 @@ func (net *RBFNetwork) Train(templates mat.Matrix, desired mat.Matrix) mat.Matri
 	return result
 }
 
-// Функция берёт последние inputDataSize значений из тренировочных данных как начальные.
-// Затем предсказывает 1 следующее число, добавляет его в inputData и убирает оттуда
+// Функция берёт последние значения из тренировочных данных как начальные.
+// Затем предсказывает 1 следующее число, добавляет его в input и убирает оттуда
 // первое значение. Таким образом количество входных данных всегда равно
 // одному и тому же числу, а предсказанные значения используются для
 // прогнозирования следующих

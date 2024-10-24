@@ -82,60 +82,10 @@ func Print(matrix mat.Matrix) {
 	}
 }
 
-// Dot product of 2 matrices
 func Dot(m, n mat.Matrix) mat.Matrix {
 	rows, _ := m.Dims()
 	_, columns := n.Dims()
 	o := mat.NewDense(rows, columns, nil)
 	o.Product(m, n)
 	return o
-}
-
-// Apply a function to the matrix
-func Apply(fn func(i, j int, v float64) float64, m mat.Matrix) mat.Matrix {
-	r, c := m.Dims()
-	o := mat.NewDense(r, c, nil)
-	o.Apply(fn, m)
-	return o
-}
-
-// Scale the matrix (multiply by scalar)
-func Scale(s float64, m mat.Matrix) mat.Matrix {
-	r, c := m.Dims()
-	o := mat.NewDense(r, c, nil)
-	o.Scale(s, m)
-	return o
-}
-
-// Перемножение двух матриц
-func Multiply(m, n mat.Matrix) mat.Matrix {
-	r, c := m.Dims()
-	o := mat.NewDense(r, c, nil)
-	o.MulElem(m, n)
-	return o
-}
-
-// Складывание и вычитание матриц
-func Add(m, n mat.Matrix) mat.Matrix {
-	r, c := m.Dims()
-	o := mat.NewDense(r, c, nil)
-	o.Add(m, n)
-	return o
-}
-func Subtract(m, n mat.Matrix) mat.Matrix {
-	r, c := m.Dims()
-	o := mat.NewDense(r, c, nil)
-	o.Sub(m, n)
-	return o
-}
-
-// Add a scalar to each value of the matrix
-func AddScalar(i float64, m mat.Matrix) mat.Matrix {
-	r, c := m.Dims()
-	a := make([]float64, r*c)
-	for x := 0; x < r*c; x++ {
-		a[x] = i
-	}
-	n := mat.NewDense(r, c, a)
-	return Add(m, n)
 }
