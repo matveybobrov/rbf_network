@@ -37,7 +37,7 @@ func NewRBFNetwork(templatesInputs mat.Matrix) *RBFNetwork {
 	// Ширина каждого окна равна 1
 	widths := make([]float64, centersAmount)
 	for i := range centersAmount {
-		widths[i] = 1
+		widths[i] = 0.9
 	}
 
 	return &RBFNetwork{centers, weights, widths}
